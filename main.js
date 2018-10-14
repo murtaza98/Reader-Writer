@@ -1,3 +1,5 @@
+var refresh_rate;
+
 function request_lock(type){
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -8,7 +10,14 @@ function request_lock(type){
     }
     xmlhttp.onreadystatechange=function() {
         if (this.readyState==4 && this.status==200) {
-            alert(this.responseText);
+//            alert(this.responseText);
+            console.log(this.responseText);
+            
+            var response = this.responseText;
+            
+            if(response=='true'){
+                stop_continous_request();
+            }
 
         }
     }
@@ -17,15 +26,13 @@ function request_lock(type){
     xmlhttp.send();
 }
 
-var refresh_rate;
-
 function continous_request_lock(type){
     refresh_rate = setInterval(function(){
                         request_lock(type);
-                    },500);
+                    },5000);
 }
 
-function release_lock(){
+function stop_continous_request(){
     if(refresh_rate!=null && refresh_rate!=undefined){
         clearInterval(refresh_rate);
     }

@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    include "db.php";
     if(isset($_GET['request_type']) && isset($_SESSION['process_name'])){
         $request_type = $_GET['request_type'];
         $process_name = $_SESSION['process_name'];
@@ -9,6 +11,17 @@
                 //if yes then allow this process to enter CS i.e to read
                 //else put it in read queue
                 
+                $query = "CALL checkReadRequest('$process_name','read');";
+                
+                $query_result = mysqli_query($connection,$query);
+                
+                $status = mysqli_fetch_assoc($query_result);
+                
+                if(isset($status['success'])){
+                    echo "true";
+                }else{
+                    echo "false";
+                }
                 
                 
                 break;
@@ -18,9 +31,17 @@
                 //else place it in write queue
                 
                 
-                break
-            default:
+                echo "write";
+                
                 break;
+            default:
+                echo "default";
+                break;
+        }
+    }else{
+        echo "else";
+        if(isset($_SESSION['process_name'])){
+            echo "yes";
         }
     }
 ?>
