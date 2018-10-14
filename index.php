@@ -67,7 +67,7 @@
 		  <div class="row">
 			<div class="col">
 		  <h3>Reading Queue</h3>
-		   <table class="table table-hover table-sm">
+		   <table id="read_queue" class="table table-hover table-sm">
 			  <tr>
 				<th>No</th>
 				<th>Process Name</th>
@@ -86,7 +86,7 @@
 		<br>
 		<div class="col">
 		  <h3>Writing Queue</h3>
-		   <table class="table table-hover table-sm">
+		   <table id="write_queue" class="table table-hover table-sm">
 			  <tr>
 				<th>No</th>
 				<th>Process Name</th>

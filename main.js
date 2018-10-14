@@ -41,7 +41,31 @@ function refresh_read_queue(){
     }
     xmlhttp.onreadystatechange=function() {
         if (this.readyState==4 && this.status==200) {
-            alert(this.responseText);
+            
+            var read_div = document.getElementById("read_queue");
+            
+            read_div.innerHTML = "";
+            
+            var myObj = JSON.parse(this.responseText);
+            
+            for (x in myObj) {
+                
+                var temp_process_name = myObj[x].process_name;
+                var temp_arrival_time = myObj[x].arrival_time;
+                
+                var tr_div = document.createElement("tr");
+                
+                var td_div_process = document.createElement("td");
+                td_div_process.innerHTML = temp_process_name;
+                
+                var td_div_time = document.createElement("td");
+                td_div_time.innerHTML = temp_arrival_time;
+                
+                tr_div.appendChild(td_div_process);
+                tr_div.appendChild(td_div_time);
+            
+                read_div.appendChild(tr_div);
+            }            
 
         }
     }
@@ -60,7 +84,31 @@ function refresh_write_queue(){
     }
     xmlhttp.onreadystatechange=function() {
         if (this.readyState==4 && this.status==200) {
-            alert(this.responseText);
+            
+            var write_div = document.getElementById("write_queue");
+            
+            write_div.innerHTML = "";
+            
+            var myObj = JSON.parse(this.responseText);
+            
+            for (x in myObj) {
+                
+                var temp_process_name = myObj[x].process_name;
+                var temp_arrival_time = myObj[x].arrival_time;
+                
+                var tr_div = document.createElement("tr");
+                
+                var td_div_process = document.createElement("td");
+                td_div_process.innerHTML = temp_process_name;
+                
+                var td_div_time = document.createElement("td");
+                td_div_time.innerHTML = temp_arrival_time;
+                
+                tr_div.appendChild(td_div_process);
+                tr_div.appendChild(td_div_time);
+            
+                write_div.appendChild(tr_div);
+            }
 
         }
     }
@@ -71,8 +119,8 @@ function refresh_write_queue(){
 
 setInterval(function(){
     refresh_read_queue();
-},100);
+},1000);
 
 setInterval(function(){
     refresh_write_queue();
-},100);
+},1000);
