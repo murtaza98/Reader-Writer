@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2018 at 06:26 AM
+-- Generation Time: Oct 14, 2018 at 08:12 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -22,6 +22,31 @@ SET time_zone = "+00:00";
 -- Database: `reader_writer`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkReadRequest` (IN `param_process_name` VARCHAR(255), IN `param_type` VARCHAR(255))  BEGIN
+DECLARE total_row INT DEFAULT 0;
+DECLARE type_process VARCHAR(255) DEFAULT 'none';
+
+    START TRANSACTION;
+    
+    SELECT type,count(*) INTO type_process,total_row FROM semaphore;
+    
+    IF type_process = 'read' OR total_row = 0 THEN
+    	INSERT INTO semaphore VALUES(param_process_name,param_type);
+        SELECT 'success';
+        COMMIT;
+    ELSE
+    	SELECT 'failure';
+    	ROLLBACK;
+    END IF;
+    
+  END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -33,6 +58,14 @@ CREATE TABLE `reader_queue` (
   `arrival_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `reader_queue`
+--
+
+INSERT INTO `reader_queue` (`process_name`, `arrival_time`) VALUES
+('a', '2018-10-14 16:38:13'),
+('b', '2018-10-14 16:38:13');
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +76,14 @@ CREATE TABLE `semaphore` (
   `process_name` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `semaphore`
+--
+
+INSERT INTO `semaphore` (`process_name`, `type`) VALUES
+('c', 'read'),
+('asd', 'read');
 
 -- --------------------------------------------------------
 
