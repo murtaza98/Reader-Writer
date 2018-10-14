@@ -17,6 +17,7 @@
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
   crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script type='text/javascript' src='./main.js'></script>
 </head>
 <body>
  
@@ -37,8 +38,8 @@
 		<div class="container-fluid">
 		  <div class="row">
 			<div class="col">
-				<button class="btn btn-default">Read</button>
-				<button class="btn btn-default">Write</button>
+				<button onclick="javascript: continous_request_lock('read');" class="btn btn-default">Read</button>
+				<button onclick="javascript: continous_request_lock('write');" class="btn btn-default">Write</button>
 				<button class="btn btn-default">Exit</button>
 			<br>
 			<br>
